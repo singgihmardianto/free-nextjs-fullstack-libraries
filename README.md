@@ -106,3 +106,58 @@ export default async function createYourCustomService(): Promise<YourCustomServi
 ```
 
 This pattern allows you to easily create type-safe services for your entities while leveraging the power of server components in Next.js.
+
+### Database Migrations
+
+This project uses TypeORM for database migrations to manage database schema changes in a version-controlled way. Migrations allow you to evolve your database schema over time while preserving existing data.
+
+#### Creating a Migration
+
+To generate a new migration based on entity changes:
+
+```bash
+bun migration:generate
+```
+
+This command will:
+
+1. Compare your entity definitions with the current database schema
+2. Generate a migration file in `src/libraries/_migrations` with the necessary SQL commands
+3. The migration file will include both `up()` (apply changes) and `down()` (revert changes) methods
+
+#### Running Migrations
+
+To apply pending migrations to your database:
+
+```bash
+bun migration:run
+```
+
+This will execute all pending migrations in order, bringing your database schema up to date with your entity definitions.
+
+#### Reverting Migrations
+
+If you need to undo the most recent migration:
+
+```bash
+bun migration:revert
+```
+
+This will run the `down()` method of the most recently applied migration, reverting those changes.
+
+#### Migration Best Practices
+
+1. Always review generated migrations before applying them to production
+2. Keep migrations small and focused on specific changes
+3. Test migrations on a staging environment before applying to production
+4. Never modify an existing migration that has been applied to any environment
+5. If you need to change a migration, create a new one that makes the desired changes
+
+#### Troubleshooting Migrations
+
+If you encounter issues with migrations:
+
+1. Check that your entity definitions are correct
+2. Ensure your database connection settings are properly configured in `src/libraries/connection.ts`
+3. Make sure your database user has sufficient privileges to modify the schema
+4. Review the migration file to ensure the SQL commands are appropriate for your database

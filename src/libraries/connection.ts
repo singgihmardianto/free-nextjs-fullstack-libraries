@@ -1,6 +1,5 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { Menu } from "./_entites/menu";
 
 // Create a singleton DataSource instance
 const AppDataSource = new DataSource({
@@ -12,8 +11,8 @@ const AppDataSource = new DataSource({
   database: process.env.DB_NAME || "dbname",
   synchronize: false,
   logging: process.env.APP_ENV?.toLowerCase() === "dev", // enable only on dev
-  entities: [Menu], // Directly reference entity classes
-  migrations: [],
+  entities: ["src/libraries/_entites/*.ts"],
+  migrations: ["src/libraries/_migrations/*.ts"],
   subscribers: [],
 });
 
@@ -38,3 +37,6 @@ export const getDataSource = async () => {
   }
   return AppDataSource;
 };
+
+// Export the AppDataSource for CLI tools
+export default AppDataSource;

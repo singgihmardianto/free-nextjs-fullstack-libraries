@@ -6,7 +6,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:generate": "bun --bun typeorm migration:generate -d src/libraries/connection.ts src/libraries/_migrations/migration",
+    "migration:run": "bun --bun typeorm migration:run -d src/libraries/connection.ts",
+    "migration:revert": "bun --bun typeorm migration:revert -d src/libraries/connection.ts"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.0.1",
